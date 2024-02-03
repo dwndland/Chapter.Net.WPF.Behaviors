@@ -23,43 +23,37 @@ namespace Chapter.Net.WPF.Behaviors;
 public sealed class ColumnSortBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetNeutralHeaderTemplate(DependencyObject)" />
-    ///     <see cref="SetNeutralHeaderTemplate(DependencyObject, DataTemplate)" /> attached property.
+    ///     Defines the NeutralHeaderTemplate attached dependency property.
     /// </summary>
     public static readonly DependencyProperty NeutralHeaderTemplateProperty =
         DependencyProperty.RegisterAttached("NeutralHeaderTemplate", typeof(DataTemplate), typeof(ColumnSortBehavior), new UIPropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetAscendingSortHeaderTemplate(DependencyObject)" />
-    ///     <see cref="SetAscendingSortHeaderTemplate(DependencyObject, DataTemplate)" /> attached property.
+    ///     Defines the AscendingSortHeaderTemplate attached dependency property.
     /// </summary>
     public static readonly DependencyProperty AscendingSortHeaderTemplateProperty =
         DependencyProperty.RegisterAttached("AscendingSortHeaderTemplate", typeof(DataTemplate), typeof(ColumnSortBehavior), new UIPropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetDescendingSortHeaderTemplate(DependencyObject)" />
-    ///     <see cref="SetDescendingSortHeaderTemplate(DependencyObject, DataTemplate)" /> attached property.
+    ///     Defines the DescendingSortHeaderTemplate attached dependency property.
     /// </summary>
     public static readonly DependencyProperty DescendingSortHeaderTemplateProperty =
         DependencyProperty.RegisterAttached("DescendingSortHeaderTemplate", typeof(DataTemplate), typeof(ColumnSortBehavior), new UIPropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetAllowColumnSortings(DependencyObject)" />
-    ///     <see cref="SetAllowColumnSortings(DependencyObject, bool)" /> attached property.
+    ///     Defines the AllowColumnSortings attached dependency property.
     /// </summary>
     public static readonly DependencyProperty AllowColumnSortingsProperty =
         DependencyProperty.RegisterAttached("AllowColumnSortings", typeof(bool), typeof(ColumnSortBehavior), new UIPropertyMetadata(OnAllowColumnSortingsChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetIsDefaultSortColumn(DependencyObject)" />
-    ///     <see cref="SetIsDefaultSortColumn(DependencyObject, bool)" /> attached property.
+    ///     Defines the IsDefaultSortColumn attached dependency property.
     /// </summary>
     public static readonly DependencyProperty IsDefaultSortColumnProperty =
         DependencyProperty.RegisterAttached("IsDefaultSortColumn", typeof(bool), typeof(ColumnSortBehavior));
 
     /// <summary>
-    ///     Identifies the <see cref="GetSortPropertyName(DependencyObject)" />
-    ///     <see cref="SetSortPropertyName(DependencyObject, string)" /> attached property.
+    ///     Defines the SortPropertyName attached dependency property.
     /// </summary>
     public static readonly DependencyProperty SortPropertyNameProperty =
         DependencyProperty.RegisterAttached("SortPropertyName", typeof(string), typeof(ColumnSortBehavior), new UIPropertyMetadata(null));

@@ -22,34 +22,29 @@ namespace Chapter.Net.WPF.Behaviors;
 public sealed class ColumnVisibilityBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetVisibleColumns(DependencyObject)" />
-    ///     <see cref="SetVisibleColumns(DependencyObject, IList)" /> attached property.
+    ///     Defines the VisibleColumns attached dependency property.
     /// </summary>
     public static readonly DependencyProperty VisibleColumnsProperty =
         DependencyProperty.RegisterAttached("VisibleColumns", typeof(IList), typeof(ColumnVisibilityBehavior), new UIPropertyMetadata(OnVisibleColumnsChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="ColumnVisibilityBehavior.GetName(DependencyObject)" />
-    ///     <see cref="ColumnVisibilityBehavior.SetName(DependencyObject, object)" /> attached property.
+    ///     Defines the Name attached dependency property.
     /// </summary>
     public static readonly DependencyProperty NameProperty =
         DependencyProperty.RegisterAttached("Name", typeof(object), typeof(ColumnVisibilityBehavior), new UIPropertyMetadata(null));
 
-    private static readonly DependencyProperty ColumnVisibilityBehaviorProperty =
-        DependencyProperty.RegisterAttached("ColumnVisibilityBehavior", typeof(ColumnVisibilityBehavior), typeof(ColumnVisibilityBehavior), new UIPropertyMetadata(null));
-
     /// <summary>
-    ///     Identifies the <see cref="ColumnVisibilityBehavior.GetPosition(DependencyObject)" />
-    ///     <see cref="ColumnVisibilityBehavior.SetPosition(DependencyObject, int)" /> attached property.
+    ///     Defines the Position attached dependency property.
     /// </summary>
     private static readonly DependencyProperty PositionProperty =
         DependencyProperty.RegisterAttached("Position", typeof(int), typeof(ColumnVisibilityBehavior), new UIPropertyMetadata(0));
 
+    private static readonly DependencyProperty ColumnVisibilityBehaviorProperty =
+        DependencyProperty.RegisterAttached("ColumnVisibilityBehavior", typeof(ColumnVisibilityBehavior), typeof(ColumnVisibilityBehavior), new UIPropertyMetadata(null));
+
     private readonly List<GridViewColumn> _filteredColumns;
     private GridViewColumnCollection _columns;
-
     private bool _isCatchedAlready;
-
     private DependencyObject _owner;
 
     private ColumnVisibilityBehavior()

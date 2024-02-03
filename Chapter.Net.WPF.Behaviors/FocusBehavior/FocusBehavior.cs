@@ -18,71 +18,61 @@ namespace Chapter.Net.WPF.Behaviors;
 public static class FocusBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetStartFocusedControl(DependencyObject)" />
-    ///     <see cref="SetStartFocusedControl(DependencyObject, UIElement)" /> attached property.
+    ///     Defines the StartFocusedControl attached dependency property.
     /// </summary>
     public static readonly DependencyProperty StartFocusedControlProperty =
         DependencyProperty.RegisterAttached("StartFocusedControl", typeof(UIElement), typeof(FocusBehavior), new UIPropertyMetadata(OnStartFocusedControlChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetHasFocus(DependencyObject)" /> <see cref="SetHasFocus(DependencyObject, bool)" />
-    ///     attached property.
+    ///     Defines the HasFocus attached dependency property.
     /// </summary>
     public static readonly DependencyProperty HasFocusProperty =
         DependencyProperty.RegisterAttached("HasFocus", typeof(bool), typeof(FocusBehavior), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHasFocusChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetLostFocusCommand(DependencyObject)" />
-    ///     <see cref="SetLostFocusCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the LostFocusCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty LostFocusCommandProperty =
         DependencyProperty.RegisterAttached("LostFocusCommand", typeof(ICommand), typeof(FocusBehavior), new PropertyMetadata(LostFocusCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetLostFocusCommandParameter(DependencyObject)" />
-    ///     <see cref="SetLostFocusCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the LostFocusCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty LostFocusCommandParameterProperty =
         DependencyProperty.RegisterAttached("LostFocusCommandParameter", typeof(object), typeof(FocusBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetGotFocusCommand(DependencyObject)" />
-    ///     <see cref="SetGotFocusCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the GotFocusCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty GotFocusCommandProperty =
         DependencyProperty.RegisterAttached("GotFocusCommand", typeof(ICommand), typeof(FocusBehavior), new PropertyMetadata(OnGotFocusCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetGotFocusCommandParameter(DependencyObject)" />
-    ///     <see cref="SetGotFocusCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the GotFocusCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty GotFocusCommandParameterProperty =
         DependencyProperty.RegisterAttached("GotFocusCommandParameter", typeof(object), typeof(FocusBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetApplicationLostFocusCommand(DependencyObject)" />
-    ///     <see cref="SetApplicationLostFocusCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the ApplicationLostFocusCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ApplicationLostFocusCommandProperty =
         DependencyProperty.RegisterAttached("ApplicationLostFocusCommand", typeof(ICommand), typeof(FocusBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetApplicationLostFocusCommandParameter(DependencyObject)" />
-    ///     <see cref="SetApplicationLostFocusCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the ApplicationLostFocusCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ApplicationLostFocusCommandParameterProperty =
         DependencyProperty.RegisterAttached("ApplicationLostFocusCommandParameter", typeof(object), typeof(FocusBehavior), new PropertyMetadata(OnApplicationFocusCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetApplicationGotFocusCommand(DependencyObject)" />
-    ///     <see cref="SetApplicationGotFocusCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the ApplicationGotFocusCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ApplicationGotFocusCommandProperty =
         DependencyProperty.RegisterAttached("ApplicationGotFocusCommand", typeof(ICommand), typeof(FocusBehavior), new PropertyMetadata(OnApplicationFocusCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetApplicationGotFocusCommandParameter(DependencyObject)" />
-    ///     <see cref="SetApplicationGotFocusCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the ApplicationGotFocusCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ApplicationGotFocusCommandParameterProperty =
         DependencyProperty.RegisterAttached("ApplicationGotFocusCommandParameter", typeof(object), typeof(FocusBehavior), new PropertyMetadata(null));

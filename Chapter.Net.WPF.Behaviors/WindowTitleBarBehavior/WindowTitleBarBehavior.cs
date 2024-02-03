@@ -18,36 +18,31 @@ namespace Chapter.Net.WPF.Behaviors;
 public static class WindowTitleBarBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetRemoveTitleItems(DependencyObject)" />
-    ///     <see cref="SetRemoveTitleItems(DependencyObject, bool)" /> attached property.
+    ///     Defines the RemoveTitleItems attached dependency property.
     /// </summary>
     public static readonly DependencyProperty RemoveTitleItemsProperty =
         DependencyProperty.RegisterAttached("RemoveTitleItems", typeof(bool), typeof(WindowTitleBarBehavior), new UIPropertyMetadata(false, OnRemoveTitleItemsChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetDisableMinimizeButton(DependencyObject)" />
-    ///     <see cref="SetDisableMinimizeButton(DependencyObject, bool)" /> attached property.
+    ///     Defines the DisableMinimizeButton attached dependency property.
     /// </summary>
     public static readonly DependencyProperty DisableMinimizeButtonProperty =
         DependencyProperty.RegisterAttached("DisableMinimizeButton", typeof(bool), typeof(WindowTitleBarBehavior), new UIPropertyMetadata(false, OnDisableMinimizeButtonChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetDisableMaximizeButton(DependencyObject)" />
-    ///     <see cref="SetDisableMaximizeButton(DependencyObject, bool)" /> attached property.
+    ///     Defines the DisableMaximizeButton attached dependency property.
     /// </summary>
     public static readonly DependencyProperty DisableMaximizeButtonProperty =
         DependencyProperty.RegisterAttached("DisableMaximizeButton", typeof(bool), typeof(WindowTitleBarBehavior), new UIPropertyMetadata(false, OnDisableMaximizeButtonChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetDisableCloseButton(DependencyObject)" />
-    ///     <see cref="SetDisableCloseButton(DependencyObject, bool)" /> attached property.
+    ///     Defines the DisableCloseButton attached dependency property.
     /// </summary>
     public static readonly DependencyProperty DisableCloseButtonProperty =
         DependencyProperty.RegisterAttached("DisableCloseButton", typeof(bool), typeof(WindowTitleBarBehavior), new PropertyMetadata(false, OnDisableCloseButtonChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetDisableSystemMenu(DependencyObject)" />
-    ///     <see cref="SetDisableSystemMenu(DependencyObject, bool)" /> attached property.
+    ///     Defines the DisableSystemMenu attached dependency property.
     /// </summary>
     public static readonly DependencyProperty DisableSystemMenuProperty =
         DependencyProperty.RegisterAttached("DisableSystemMenu", typeof(bool), typeof(WindowTitleBarBehavior), new PropertyMetadata(false, OnDisableSystemMenuChanged));

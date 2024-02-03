@@ -23,127 +23,109 @@ namespace Chapter.Net.WPF.Behaviors;
 public static class WindowBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetDialogResult(DependencyObject)" />
-    ///     <see cref="SetDialogResult(DependencyObject, bool?)" /> attached property.
+    ///     Defines the DialogResult attached dependency property.
     /// </summary>
     public static readonly DependencyProperty DialogResultProperty =
         DependencyProperty.RegisterAttached("DialogResult", typeof(bool?), typeof(WindowBehavior), new UIPropertyMetadata(OnDialogResultChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetDialogResultCommand(DependencyObject)" />
-    ///     <see cref="SetDialogResultCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the DialogResultCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty DialogResultCommandProperty =
         DependencyProperty.RegisterAttached("DialogResultCommand", typeof(ICommand), typeof(WindowBehavior), new UIPropertyMetadata(OnDialogResultChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetDialogResultCommandParameter(DependencyObject)" />
-    ///     <see cref="SetDialogResultCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the DialogResultCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty DialogResultCommandParameterProperty =
         DependencyProperty.RegisterAttached("DialogResultCommandParameter", typeof(object), typeof(WindowBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetClosingCommand(DependencyObject)" />
-    ///     <see cref="SetClosingCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the ClosingCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ClosingCommandProperty =
         DependencyProperty.RegisterAttached("ClosingCommand", typeof(ICommand), typeof(WindowBehavior), new UIPropertyMetadata(OnClosingCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetClosingCommandParameter(DependencyObject)" />
-    ///     <see cref="SetClosingCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the ClosingCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ClosingCommandParameterProperty =
         DependencyProperty.RegisterAttached("ClosingCommandParameter", typeof(object), typeof(WindowBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetClosedCommand(DependencyObject)" />
-    ///     <see cref="SetClosedCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the ClosedCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ClosedCommandProperty =
         DependencyProperty.RegisterAttached("ClosedCommand", typeof(ICommand), typeof(WindowBehavior), new UIPropertyMetadata(OnClosedCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetClosedCommandParameter(DependencyObject)" />
-    ///     <see cref="SetClosedCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the ClosedCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ClosedCommandParameterProperty =
         DependencyProperty.RegisterAttached("ClosedCommandParameter", typeof(object), typeof(WindowBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetIsClose(DependencyObject)" /> <see cref="SetIsClose(DependencyObject, bool)" />
-    ///     attached property.
+    ///     Defines the IsClose attached dependency property.
     /// </summary>
     public static readonly DependencyProperty IsCloseProperty =
         DependencyProperty.RegisterAttached("IsClose", typeof(bool), typeof(WindowBehavior), new UIPropertyMetadata(OnIsCloseCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetIsCloseCommand(DependencyObject)" />
-    ///     <see cref="SetIsCloseCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the IsCloseCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty IsCloseCommandProperty =
         DependencyProperty.RegisterAttached("IsCloseCommand", typeof(ICommand), typeof(WindowBehavior), new PropertyMetadata(OnIsCloseCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetDialogResultCommandParameter(DependencyObject)" />
-    ///     <see cref="SetDialogResultCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the IsCloseCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty IsCloseCommandParameterProperty =
         DependencyProperty.RegisterAttached("IsCloseCommandParameter", typeof(object), typeof(WindowBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetWinApiMessages(DependencyObject)" />
-    ///     <see cref="SetWinApiMessages(DependencyObject, string)" /> attached property.
+    ///     Defines the WinApiMessages attached dependency property.
     /// </summary>
     public static readonly DependencyProperty WinApiMessagesProperty =
         DependencyProperty.RegisterAttached("WinApiMessages", typeof(string), typeof(WindowBehavior), new UIPropertyMetadata(OnWinApiMessagesChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetWinApiCommand(DependencyObject)" />
-    ///     <see cref="SetWinApiCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the WinApiCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty WinApiCommandProperty =
         DependencyProperty.RegisterAttached("WinApiCommand", typeof(ICommand), typeof(WindowBehavior), new UIPropertyMetadata(OnWinApiCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetWindowActivatedCommand(DependencyObject)" />
-    ///     <see cref="SetWindowActivatedCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the WindowActivatedCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty WindowActivatedCommandProperty =
         DependencyProperty.RegisterAttached("WindowActivatedCommand", typeof(ICommand), typeof(WindowBehavior), new PropertyMetadata(OnWindowActivatedCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetWindowActivatedCommandParameter(DependencyObject)" />
-    ///     <see cref="SetWindowActivatedCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the WindowActivatedCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty WindowActivatedCommandParameterProperty =
         DependencyProperty.RegisterAttached("WindowActivatedCommandParameter", typeof(object), typeof(WindowBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetWindowDeactivatedCommand(DependencyObject)" />
-    ///     <see cref="SetWindowDeactivatedCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the WindowDeactivatedCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty WindowDeactivatedCommandProperty =
         DependencyProperty.RegisterAttached("WindowDeactivatedCommand", typeof(ICommand), typeof(WindowBehavior), new PropertyMetadata(OnWindowDeactivatedCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetWindowDeactivatedCommandParameter(DependencyObject)" />
-    ///     <see cref="SetWindowDeactivatedCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the WindowDeactivatedCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty WindowDeactivatedCommandParameterProperty =
         DependencyProperty.RegisterAttached("WindowDeactivatedCommandParameter", typeof(object), typeof(WindowBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetWindowStateChangedCommand(DependencyObject)" />
-    ///     <see cref="SetWindowStateChangedCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the WindowStateChangedCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty WindowStateChangedCommandProperty =
         DependencyProperty.RegisterAttached("WindowStateChangedCommand", typeof(ICommand), typeof(WindowBehavior), new PropertyMetadata(OnWindowStateChangedCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetTheme(DependencyObject)" />
-    ///     <see cref="SetTheme(DependencyObject, WindowTheme)" /> attached property.
+    ///     Defines the Theme attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ThemeProperty =
         DependencyProperty.RegisterAttached("Theme", typeof(WindowTheme), typeof(WindowBehavior), new PropertyMetadata(OnThemeChanged));

@@ -19,22 +19,19 @@ namespace Chapter.Net.WPF.Behaviors;
 public sealed class ScrollBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetScrollToItem(DependencyObject)" />
-    ///     <see cref="SetScrollToItem(DependencyObject, object)" /> attached property.
+    ///     Defines the ScrollToItem attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ScrollToItemProperty =
         DependencyProperty.RegisterAttached("ScrollToItem", typeof(object), typeof(ScrollBehavior), new UIPropertyMetadata(OnScrollChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetAutoScrollToLast(DependencyObject)" />
-    ///     <see cref="SetAutoScrollToLast(DependencyObject, bool)" /> attached property.
+    ///     Defines the AutoScrollToLast attached dependency property.
     /// </summary>
     public static readonly DependencyProperty AutoScrollToLastProperty =
         DependencyProperty.RegisterAttached("AutoScrollToLast", typeof(bool), typeof(ScrollBehavior), new UIPropertyMetadata(OnScrollChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetAutoScrollToSelected(DependencyObject)" />
-    ///     <see cref="SetAutoScrollToSelected(DependencyObject, bool)" /> attached property.
+    ///     Defines the AutoScrollToSelected attached dependency property.
     /// </summary>
     public static readonly DependencyProperty AutoScrollToSelectedProperty =
         DependencyProperty.RegisterAttached("AutoScrollToSelected", typeof(bool), typeof(ScrollBehavior), new UIPropertyMetadata(OnScrollChanged));

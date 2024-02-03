@@ -24,8 +24,7 @@ namespace Chapter.Net.WPF.Behaviors;
 public sealed class CutTooltipBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetShowTooltip(DependencyObject)" />
-    ///     <see cref="SetShowTooltip(DependencyObject, CutTextKind)" /> attached property.
+    ///     Defines the ShowTooltip attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ShowTooltipProperty =
         DependencyProperty.RegisterAttached("ShowTooltip", typeof(CutTextKind), typeof(CutTooltipBehavior), new PropertyMetadata(OnShowTooltipChanged));

@@ -19,31 +19,28 @@ namespace Chapter.Net.WPF.Behaviors;
 public sealed class TextBoxBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetSelectedText(DependencyObject)" />
-    ///     <see cref="SetSelectedText(DependencyObject, string)" /> attached property.
+    ///     Defines the SelectedText attached dependency property.
     /// </summary>
     public static readonly DependencyProperty SelectedTextProperty =
         DependencyProperty.RegisterAttached("SelectedText", typeof(string), typeof(TextBoxBehavior), new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTextChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetSelectAllOnFocus(DependencyObject)" />
-    ///     <see cref="SetSelectAllOnFocus(DependencyObject, bool)" /> attached property.
+    ///     Defines the SelectAllOnFocus attached dependency property.
     /// </summary>
     public static readonly DependencyProperty SelectAllOnFocusProperty =
         DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextBoxBehavior), new UIPropertyMetadata(OnSelectAllOnFocusChanged));
+
+    /// <summary>
+    ///     Defines the RefreshBindingOnKey attached dependency property.
+    /// </summary>
+    public static readonly DependencyProperty RefreshBindingOnKeyProperty =
+        DependencyProperty.RegisterAttached("RefreshBindingOnKey", typeof(Key), typeof(TextBoxBehavior), new UIPropertyMetadata(OnRefreshBindingOnKeyChanged));
 
     private static readonly DependencyProperty TextTextBoxBehaviorProperty =
         DependencyProperty.RegisterAttached("TextTextBoxBehavior", typeof(TextBoxBehavior), typeof(TextBoxBehavior), new UIPropertyMetadata(null));
 
     private static readonly DependencyProperty AllTextBoxBehaviorProperty =
         DependencyProperty.RegisterAttached("AllTextBoxBehavior", typeof(TextBoxBehavior), typeof(TextBoxBehavior), new UIPropertyMetadata(null));
-
-    /// <summary>
-    ///     Identifies the <see cref="GetRefreshBindingOnKey(DependencyObject)" />
-    ///     <see cref="SetRefreshBindingOnKey(DependencyObject, Key)" /> attached property.
-    /// </summary>
-    public static readonly DependencyProperty RefreshBindingOnKeyProperty =
-        DependencyProperty.RegisterAttached("RefreshBindingOnKey", typeof(Key), typeof(TextBoxBehavior), new UIPropertyMetadata(OnRefreshBindingOnKeyChanged));
 
     private bool _textSelecting;
 

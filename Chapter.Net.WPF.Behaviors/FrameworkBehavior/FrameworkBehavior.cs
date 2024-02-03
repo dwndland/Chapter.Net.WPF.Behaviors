@@ -18,29 +18,25 @@ namespace Chapter.Net.WPF.Behaviors;
 public static class FrameworkBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetLoadedCommand(DependencyObject)" />
-    ///     <see cref="SetLoadedCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the LoadedCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty LoadedCommandProperty =
         DependencyProperty.RegisterAttached("LoadedCommand", typeof(ICommand), typeof(FrameworkBehavior), new PropertyMetadata(OnLoadedCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetLoadedCommandParameter(DependencyObject)" />
-    ///     <see cref="SetLoadedCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the LoadedCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty LoadedCommandParameterProperty =
         DependencyProperty.RegisterAttached("LoadedCommandParameter", typeof(object), typeof(FrameworkBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetUnloadedCommand(DependencyObject)" />
-    ///     <see cref="SetUnloadedCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the UnloadedCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty UnloadedCommandProperty =
         DependencyProperty.RegisterAttached("UnloadedCommand", typeof(ICommand), typeof(FrameworkBehavior), new PropertyMetadata(OnUnloadedCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetUnloadedCommandParameter(DependencyObject)" />
-    ///     <see cref="SetUnloadedCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the UnloadedCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty UnloadedCommandParameterProperty =
         DependencyProperty.RegisterAttached("UnloadedCommandParameter", typeof(object), typeof(FrameworkBehavior), new PropertyMetadata(null));

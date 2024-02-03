@@ -18,8 +18,7 @@ namespace Chapter.Net.WPF.Behaviors;
 public static class DragMoveBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetEnable(DependencyObject)" /> <see cref="SetEnable(DependencyObject, bool)" />
-    ///     attached property.
+    ///     Defines the Enable attached dependency property.
     /// </summary>
     public static readonly DependencyProperty EnableProperty =
         DependencyProperty.RegisterAttached("Enable", typeof(bool), typeof(DragMoveBehavior), new PropertyMetadata(OnEnableChanged));

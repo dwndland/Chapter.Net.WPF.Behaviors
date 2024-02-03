@@ -19,64 +19,55 @@ namespace Chapter.Net.WPF.Behaviors;
 public static class ListBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetItemDoubleClickedCommand(DependencyObject)" />
-    ///     <see cref="SetItemDoubleClickedCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the ItemDoubleClickedCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ItemDoubleClickedCommandProperty =
         DependencyProperty.RegisterAttached("ItemDoubleClickedCommand", typeof(ICommand), typeof(ListBehavior), new PropertyMetadata(null, OnItemDoubleClickedCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetItemDoubleClickedCommandParameter(DependencyObject)" />
-    ///     <see cref="SetItemDoubleClickedCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the ItemDoubleClickedCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ItemDoubleClickedCommandParameterProperty =
         DependencyProperty.RegisterAttached("ItemDoubleClickedCommandParameter", typeof(object), typeof(ListBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetItemClickedCommand(DependencyObject)" />
-    ///     <see cref="SetItemClickedCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the ItemClickedCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ItemClickedCommandProperty =
         DependencyProperty.RegisterAttached("ItemClickedCommand", typeof(ICommand), typeof(ListBehavior), new PropertyMetadata(null, OnItemClickedCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetItemClickedCommandParameter(DependencyObject)" />
-    ///     <see cref="SetItemClickedCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the ItemClickedCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ItemClickedCommandParameterProperty =
         DependencyProperty.RegisterAttached("ItemClickedCommandParameter", typeof(object), typeof(ListBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetEmptyAreaDoubleClickCommand(DependencyObject)" />
-    ///     <see cref="SetEmptyAreaDoubleClickCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the EmptyAreaDoubleClickCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty EmptyAreaDoubleClickCommandProperty =
         DependencyProperty.RegisterAttached("EmptyAreaDoubleClickCommand", typeof(ICommand), typeof(ListBehavior), new PropertyMetadata(null, OnEmptyAreaDoubleClickCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetEmptyAreaDoubleClickCommandParameter(DependencyObject)" />
-    ///     <see cref="SetEmptyAreaDoubleClickCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the EmptyAreaDoubleClickCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty EmptyAreaDoubleClickCommandParameterProperty =
         DependencyProperty.RegisterAttached("EmptyAreaDoubleClickCommandParameter", typeof(object), typeof(ListBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetEmptyAreaClickCommand(DependencyObject)" />
-    ///     <see cref="SetEmptyAreaClickCommand(DependencyObject, ICommand)" /> attached property.
+    ///     Defines the EmptyAreaClickCommand attached dependency property.
     /// </summary>
     public static readonly DependencyProperty EmptyAreaClickCommandProperty =
         DependencyProperty.RegisterAttached("EmptyAreaClickCommand", typeof(ICommand), typeof(ListBehavior), new PropertyMetadata(null, OnEmptyAreaClickCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetEmptyAreaClickCommandParameter(DependencyObject)" />
-    ///     <see cref="SetEmptyAreaClickCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the EmptyAreaClickCommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty EmptyAreaClickCommandParameterProperty =
         DependencyProperty.RegisterAttached("EmptyAreaClickCommandParameter", typeof(object), typeof(ListBehavior), new PropertyMetadata(null));
 
     /// <summary>
-    ///     Identifies the <see cref="GetAutoDeselect(DependencyObject)" />
-    ///     <see cref="SetAutoDeselect(DependencyObject, bool)" /> attached property.
+    ///     Defines the AutoDeselect attached dependency property.
     /// </summary>
     public static readonly DependencyProperty AutoDeselectProperty =
         DependencyProperty.RegisterAttached("AutoDeselect", typeof(bool), typeof(ListBehavior), new PropertyMetadata(false, OnAutoDeselectChanged));

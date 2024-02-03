@@ -18,15 +18,13 @@ namespace Chapter.Net.WPF.Behaviors;
 public static class KeyBlockBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetBlockAll(DependencyObject)" /> <see cref="SetBlockAll(DependencyObject, bool)" />
-    ///     attached property.
+    ///     Defines the BlockAll attached dependency property.
     /// </summary>
     public static readonly DependencyProperty BlockAllProperty =
         DependencyProperty.RegisterAttached("BlockAll", typeof(bool), typeof(KeyBlockBehavior), new PropertyMetadata(OnBlockAllChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetBlockKey(DependencyObject)" /> <see cref="SetBlockKey(DependencyObject, Key)" />
-    ///     attached property.
+    ///     Defines the BlockKey attached dependency property.
     /// </summary>
     public static readonly DependencyProperty BlockKeyProperty =
         DependencyProperty.RegisterAttached("BlockKey", typeof(Key), typeof(KeyBlockBehavior), new PropertyMetadata(OnBlockKeyChanged));

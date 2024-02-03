@@ -18,15 +18,13 @@ namespace Chapter.Net.WPF.Behaviors;
 public static class DoubleClickBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetCommand(DependencyObject)" /> <see cref="SetCommand(DependencyObject, ICommand)" />
-    ///     attached property.
+    ///     Defines the Command attached dependency property.
     /// </summary>
     public static readonly DependencyProperty CommandProperty =
         DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(DoubleClickBehavior), new UIPropertyMetadata(OnCommandChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetCommandParameter(DependencyObject)" />
-    ///     <see cref="SetCommandParameter(DependencyObject, object)" /> attached property.
+    ///     Defines the CommandParameter attached dependency property.
     /// </summary>
     public static readonly DependencyProperty CommandParameterProperty =
         DependencyProperty.RegisterAttached("CommandParameter", typeof(object), typeof(DoubleClickBehavior), new UIPropertyMetadata(null));

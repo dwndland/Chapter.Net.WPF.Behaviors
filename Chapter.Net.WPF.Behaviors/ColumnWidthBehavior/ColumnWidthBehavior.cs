@@ -22,22 +22,19 @@ namespace Chapter.Net.WPF.Behaviors;
 public sealed class ColumnWidthBehavior
 {
     /// <summary>
-    ///     Identifies the <see cref="GetAutoSize(DependencyObject)" />
-    ///     <see cref="SetAutoSize(DependencyObject, ColumnResizeKind)" /> attached property.
+    ///     Defines the AutoSize attached dependency property.
     /// </summary>
     public static readonly DependencyProperty AutoSizeProperty =
         DependencyProperty.RegisterAttached("AutoSize", typeof(ColumnResizeKind), typeof(ColumnWidthBehavior), new UIPropertyMetadata(OnAutoSizeChanged));
 
     /// <summary>
-    ///     Identifies the <see cref="GetProportionalWidth(DependencyObject)" />
-    ///     <see cref="SetProportionalWidth(DependencyObject, double)" /> attached property.
+    ///     Defines the ProportionalWidth attached dependency property.
     /// </summary>
     public static readonly DependencyProperty ProportionalWidthProperty =
         DependencyProperty.RegisterAttached("ProportionalWidth", typeof(double), typeof(ColumnWidthBehavior), new UIPropertyMetadata(double.NaN));
 
     /// <summary>
-    ///     Identifies the <see cref="GetTemplatePaddingWidthFix(DependencyObject)" />
-    ///     <see cref="SetTemplatePaddingWidthFix(DependencyObject, double)" /> attached property.
+    ///     Defines the TemplatePaddingWidthFix attached dependency property.
     /// </summary>
     public static readonly DependencyProperty TemplatePaddingWidthFixProperty =
         DependencyProperty.RegisterAttached("TemplatePaddingWidthFix", typeof(double), typeof(ColumnWidthBehavior), new UIPropertyMetadata(10.0));
@@ -53,7 +50,6 @@ public sealed class ColumnWidthBehavior
 
     private bool _changedEventCatched;
     private GridViewColumnCollection _columns;
-
     private DependencyObject _owner;
     private ScrollContentPresenter _scrollContentPresenter;
     private List<GridViewColumn> _toResizeColumns;

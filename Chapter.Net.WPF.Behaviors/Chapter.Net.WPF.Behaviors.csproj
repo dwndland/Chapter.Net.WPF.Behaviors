@@ -6,7 +6,7 @@
     <Version>1.0.0</Version>
     <Authors>David Wendland</Authors>
     <Description>Brings additional behaviors to existing WPF controls.</Description>
-    <Copyright>Copyright (c) 2023 David Wendland</Copyright>
+    <Copyright>Copyright (c) 2024 David Wendland</Copyright>
     <PackageProjectUrl>https://github.com/dwndland/Chapter.Net.WPF.Behaviors</PackageProjectUrl>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
