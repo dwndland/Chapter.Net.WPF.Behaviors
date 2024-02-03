@@ -7,6 +7,7 @@ Brings additional behaviors to existing WPF controls.
 - **ColumnSortBehavior:** Enables sorting by click on the header on a ListView.
 - **ColumnVisibilityBehavior:** Enables dynamically display and hide of columns of a ListView.
 - **ColumnWidthBehavior:** Allows defining column sizes of a ListView.
+- **ComboBoxBehavior:** Brings the definition of max text length of the combobox if it is editable.
 - **CutTooltipBehavior:** Brings the functionality to the TextBlock and Label to show the text in the tooltip automatically when its cut.
 - **DoubleClickBehavior:** Brings the feature to be able to double click any UI element.
 - **DragMoveBehavior:** Enables that a window can be moved by the mouse when drop down on a content.
@@ -117,13 +118,19 @@ Brings additional behaviors to existing WPF controls.
     </ListView>
     ```
 
-5. **CutTooltipBehavior:**
+5. **ComboBoxBehavior:**
+    - Usage
+    ```xaml
+    <ComboBox IsEditable="True" controls:ComboBoxBehavior.MaxLength="30" />
+    ```
+
+6. **CutTooltipBehavior:**
     - Usage
     ```xaml
     <TextBlock Text="{Binding AnyLongtext}" controls:CutTooltipBehavior.ShowTooltip="Width" />
     ```
 
-6. **DoubleClickBehavior:**
+7. **DoubleClickBehavior:**
     - Usage
     ```xaml
     <TextBlock Text="Doubleclick Me"
@@ -131,7 +138,7 @@ Brings additional behaviors to existing WPF controls.
                controls:DoubleClickBehavior.CommandParameter="Parameter" />
     ```
 
-7. **DragMoveBehavior:**
+8. **DragMoveBehavior:**
     - Usage
     ```xaml
     <Window controls:DragMoveBehavior.Enabled="True">
