@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Add ComboBoxBehavior to define of max text length of the combobox if it is editable.
+- Add DynamicResourceBehavior to create a dynamic resource out of a binding value.
 ### Supported .Net Versions
 - .Net 6
 - .Net 7

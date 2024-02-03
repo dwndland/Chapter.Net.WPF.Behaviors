@@ -11,6 +11,7 @@ Brings additional behaviors to existing WPF controls.
 - **CutTooltipBehavior:** Brings the functionality to the TextBlock and Label to show the text in the tooltip automatically when its cut.
 - **DoubleClickBehavior:** Brings the feature to be able to double click any UI element.
 - **DragMoveBehavior:** Enables that a window can be moved by the mouse when drop down on a content.
+- **DynamicResourceBehavior:** Brings the possibility to create a dynamic resource out of a binding value.
 - **FocusBehavior:** Brings the feature to set the focus to a specific element or on window launch.
 - **FrameworkBehavior:** Brings commands for actions on FrameworkElements.
 - **KeyBlockBehavior:** Disabled specific keys on a control.
@@ -156,7 +157,13 @@ Brings additional behaviors to existing WPF controls.
     </Window>
     ```
 
-8. **FocusBehavior:**
+9. **DynamicResourceBehavior:**
+    - Usage
+    ```xaml
+    <TextBlock controls:DynamicResourceBehavior.ResourceKey="{Binding MyTranslationKey}" />
+    ```
+
+10. **FocusBehavior:**
     - Usage
     ```xaml
     <Window controls:FocusBehavior.ApplicationGotFocusCommand="{Binding SwitchedToApplicationCommand}"
@@ -172,7 +179,7 @@ Brings additional behaviors to existing WPF controls.
     <Button controls:FocusBehavior.HasFocus="{Binding IsButtonFocused}" />
     ```
 
-9. **FrameworkBehavior:**
+11. **FrameworkBehavior:**
     - Usage
     ```xaml
     <Button controls:FrameworkBehavior.LoadedCommand="{Binding ButtonLoadedCommand" />
@@ -193,14 +200,14 @@ Brings additional behaviors to existing WPF controls.
     }
     ```
 
-10. **KeyBlockBehavior:**
+12. **KeyBlockBehavior:**
     - Usage
     ```xaml
     <Window controls:KeyBlockBehavior.BlockAll="True">
     </Window>
     ```
 
-11. **ListBehavior:**
+13. **ListBehavior:**
     - Usage
     ```xaml
     <ListBox controls:ListBehavior.ItemDoubleClickedCommand="{Binding ItemDoubleClickedCommand}"
@@ -216,7 +223,7 @@ Brings additional behaviors to existing WPF controls.
              controls:ListBehavior.AutoDeselect="True" />
     ```
 
-12. **ScrollBehavior:**
+14. **ScrollBehavior:**
     - Usage
     ```xaml
     <ListBox ItemsSource="{Binding LogEntries}"
@@ -226,7 +233,7 @@ Brings additional behaviors to existing WPF controls.
              controls:ScrollBehavior.ScrollToItem="{Binding ImportantEntry}" />
     ```
 
-13. **TextBoxBehavior:**
+15. **TextBoxBehavior:**
     - Usage
     ```xaml
     <TextBox Text="{Binding TheText}"
@@ -234,7 +241,7 @@ Brings additional behaviors to existing WPF controls.
              controls:TextBoxBehavior.SelectedText="{Binding SelectedText}" />
     ```
 
-14. **WindowBehavior:**
+16. **WindowBehavior:**
     - Usage
     ```xaml
     <Window controls:WindowBehavior.ClosingCommand="{Binding ClosingCommand}">
@@ -265,7 +272,7 @@ Brings additional behaviors to existing WPF controls.
     }
     ```
 
-15. **WindowTitleBarBehavior:**
+17. **WindowTitleBarBehavior:**
     - Usage
     ```xaml
     <Window controls:WindowTitleBarBehavior.DisableMinimizeButton="True"
