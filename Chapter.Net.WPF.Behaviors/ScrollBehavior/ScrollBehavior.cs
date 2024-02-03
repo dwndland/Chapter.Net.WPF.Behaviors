@@ -8,6 +8,8 @@ using System;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 // ReSharper disable CheckNamespace
 
@@ -35,6 +37,12 @@ public sealed class ScrollBehavior
     /// </summary>
     public static readonly DependencyProperty AutoScrollToSelectedProperty =
         DependencyProperty.RegisterAttached("AutoScrollToSelected", typeof(bool), typeof(ScrollBehavior), new UIPropertyMetadata(OnScrollChanged));
+
+    /// <summary>
+    ///     Defines the Disable attached dependency property.
+    /// </summary>
+    public static readonly DependencyProperty DisableProperty =
+        DependencyProperty.RegisterAttached("Disable", typeof(bool), typeof(ScrollBehavior), new PropertyMetadata(false, OnDisableChanged));
 
     private static readonly DependencyProperty ScrollBehaviorProperty =
         DependencyProperty.RegisterAttached("ScrollBehavior", typeof(ScrollBehavior), typeof(ScrollBehavior), new UIPropertyMetadata(null));
@@ -104,6 +112,26 @@ public sealed class ScrollBehavior
     public static void SetAutoScrollToSelected(DependencyObject obj, bool value)
     {
         obj.SetValue(AutoScrollToSelectedProperty, value);
+    }
+
+    /// <summary>
+    ///   Gets the indicator if mouse wheel or touch swipe shall be disabled or not.
+    /// </summary>
+    /// <param name="obj">The element from which the property value is read.</param>
+    /// <returns>The indicator if mouse wheel or touch swipe shall be disabled or not.</returns>
+    public static bool GetDisable(DependencyObject obj)
+    {
+        return (bool)obj.GetValue(DisableProperty);
+    }
+
+    /// <summary>
+    ///   Sets the indicator if mouse wheel or touch swipe shall be disabled or not.
+    /// </summary>
+    /// <param name="obj">The element to which the attached property is written.</param>
+    /// <param name="value">The indicator if mouse wheel or touch swipe shall be disabled or not.</param>
+    public static void SetDisable(DependencyObject obj, bool value)
+    {
+        obj.SetValue(DisableProperty, value);
     }
 
     private static ScrollBehavior GetScrollBehavior(DependencyObject obj)
@@ -214,5 +242,39 @@ public sealed class ScrollBehavior
     {
         if (dataGrid.Items.Count > 0)
             dataGrid.ScrollIntoView(dataGrid.Items[^1]);
+    }
+
+    private static void OnDisableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (!(d is ItemsControl control))
+            throw new InvalidOperationException("ScrollBehavior.Disable can be attached to ItemsControls only.");
+
+        if ((bool)e.OldValue)
+        {
+            ScrollViewer.SetPanningMode(control, PanningMode.Both);
+            control.PreviewMouseWheel -= ControlOnPreviewMouseWheel;
+        }
+
+        if ((bool)e.NewValue)
+        {
+            ScrollViewer.SetPanningMode(control, PanningMode.None);
+            control.PreviewMouseWheel += ControlOnPreviewMouseWheel;
+        }
+    }
+
+    private static void ControlOnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
+    {
+        var parent = VisualTreeHelper.GetParent((DependencyObject)sender);
+        if (!(parent is UIElement element))
+            return;
+
+        var eventArgs = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+        {
+            RoutedEvent = UIElement.MouseWheelEvent,
+            Source = sender
+        };
+
+        element.RaiseEvent(eventArgs);
+        e.Handled = true;
     }
 }
