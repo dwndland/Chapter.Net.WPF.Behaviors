@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0-windows;net7.0-windows;net8.0-windows</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;net45;net5.0-windows;net6.0-windows;net7.0-windows;net8.0-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
     <Authors>David Wendland</Authors>
     <Description>Brings additional behaviors to existing WPF controls.</Description>
     <Copyright>Copyright (c) 2024 David Wendland</Copyright>
@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Chapter.Net.WPF" Version="1.0.0" />
+    <PackageReference Include="Chapter.Net.WPF" Version="1.1.0" />
   </ItemGroup>
 
 </Project>

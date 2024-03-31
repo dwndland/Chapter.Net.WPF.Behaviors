@@ -12,60 +12,60 @@ using Chapter.Net.WinAPI.Data;
 
 // ReSharper disable once CheckNamespace
 
-namespace Chapter.Net.WPF.Behaviors.Internals;
-
-internal static class WindowTitleBar
+namespace Chapter.Net.WPF.Behaviors.Internals
 {
-    internal static void RemoveTitleItems(Window window)
+    internal static class WindowTitleBar
     {
-        var hwnd = new WindowInteropHelper(window).Handle;
-        var windowLong = User32.GetWindowLong(hwnd, GWL.STYLE);
-        windowLong &= ~WS.SYSMENU;
-        User32.SetWindowLong(hwnd, GWL.STYLE, windowLong);
-    }
-
-    internal static void DisableSystemMenu(Window window)
-    {
-        var hwnd = new WindowInteropHelper(window).Handle;
-        var windowLong = User32.GetWindowLong(hwnd, GWL.EXSTYLE);
-        windowLong |= WS.EX_DLGMODALFRAME;
-        uint windowFlags = SWP.NOMOVE | SWP.NOSIZE | SWP.NOZORDER | SWP.FRAMECHANGED;
-        User32.SetWindowLong(hwnd, GWL.EXSTYLE, windowLong);
-        User32.SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 0, 0, windowFlags);
-    }
-
-    internal static void DisableMinimizeButton(Window window)
-    {
-        var hwnd = new WindowInteropHelper(window).Handle;
-        var windowLong = User32.GetWindowLong(hwnd, GWL.STYLE);
-        windowLong &= ~WS.MINIMIZEBOX;
-        User32.SetWindowLong(hwnd, GWL.STYLE, windowLong);
-    }
-
-    internal static void DisableMaximizeButton(Window window)
-    {
-        var hwnd = new WindowInteropHelper(window).Handle;
-        var windowLong = User32.GetWindowLong(hwnd, GWL.STYLE);
-        windowLong &= ~WS.MAXIMIZEBOX;
-        User32.SetWindowLong(hwnd, GWL.STYLE, windowLong);
-    }
-
-    internal static void DisableCloseButton(Window window)
-    {
-        var hwndSource = PresentationSource.FromVisual(window) as HwndSource;
-        if (hwndSource != null)
-            hwndSource.AddHook(DisableCloseButtonHook);
-    }
-
-    private static nint DisableCloseButtonHook(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled)
-    {
-        if (msg == WM.SHOWWINDOW)
+        internal static void RemoveTitleItems(Window window)
         {
-            var hMenu = User32.GetSystemMenu(hwnd, false);
-            if (hMenu != IntPtr.Zero)
-                User32.EnableMenuItem(hMenu, SC.CLOSE, MF.BYCOMMAND | MF.GRAYED);
+            var hwnd = new WindowInteropHelper(window).Handle;
+            var windowLong = User32.GetWindowLong(hwnd, GWL.STYLE);
+            windowLong &= ~WS.SYSMENU;
+            User32.SetWindowLong(hwnd, GWL.STYLE, windowLong);
         }
 
-        return IntPtr.Zero;
+        internal static void DisableSystemMenu(Window window)
+        {
+            var hwnd = new WindowInteropHelper(window).Handle;
+            var windowLong = User32.GetWindowLong(hwnd, GWL.EXSTYLE);
+            windowLong |= WS.EX_DLGMODALFRAME;
+            uint windowFlags = SWP.NOMOVE | SWP.NOSIZE | SWP.NOZORDER | SWP.FRAMECHANGED;
+            User32.SetWindowLong(hwnd, GWL.EXSTYLE, windowLong);
+            User32.SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 0, 0, windowFlags);
+        }
+
+        internal static void DisableMinimizeButton(Window window)
+        {
+            var hwnd = new WindowInteropHelper(window).Handle;
+            var windowLong = User32.GetWindowLong(hwnd, GWL.STYLE);
+            windowLong &= ~WS.MINIMIZEBOX;
+            User32.SetWindowLong(hwnd, GWL.STYLE, windowLong);
+        }
+
+        internal static void DisableMaximizeButton(Window window)
+        {
+            var hwnd = new WindowInteropHelper(window).Handle;
+            var windowLong = User32.GetWindowLong(hwnd, GWL.STYLE);
+            windowLong &= ~WS.MAXIMIZEBOX;
+            User32.SetWindowLong(hwnd, GWL.STYLE, windowLong);
+        }
+
+        internal static void DisableCloseButton(Window window)
+        {
+            if (PresentationSource.FromVisual(window) is HwndSource hwndSource)
+                hwndSource.AddHook(DisableCloseButtonHook);
+        }
+
+        private static IntPtr DisableCloseButtonHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM.SHOWWINDOW)
+            {
+                var hMenu = User32.GetSystemMenu(hwnd, false);
+                if (hMenu != IntPtr.Zero)
+                    User32.EnableMenuItem(hMenu, SC.CLOSE, MF.BYCOMMAND | MF.GRAYED);
+            }
+
+            return IntPtr.Zero;
+        }
     }
 }
