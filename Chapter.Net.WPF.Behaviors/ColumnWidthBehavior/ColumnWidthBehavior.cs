@@ -13,325 +13,324 @@ using System.Windows.Data;
 
 // ReSharper disable CheckNamespace
 
-namespace Chapter.Net.WPF.Behaviors
+namespace Chapter.Net.WPF.Behaviors;
+
+/// <summary>
+///     Brings the feature to controls with a <see cref="System.Windows.Controls.GridViewColumnHeader" /> to have columns
+///     with a dynamic width.
+/// </summary>
+public sealed class ColumnWidthBehavior
 {
     /// <summary>
-    ///     Brings the feature to controls with a <see cref="System.Windows.Controls.GridViewColumnHeader" /> to have columns
-    ///     with a dynamic width.
+    ///     Defines the AutoSize attached dependency property.
     /// </summary>
-    public sealed class ColumnWidthBehavior
+    public static readonly DependencyProperty AutoSizeProperty =
+        DependencyProperty.RegisterAttached("AutoSize", typeof(ColumnResizeKind), typeof(ColumnWidthBehavior), new UIPropertyMetadata(OnAutoSizeChanged));
+
+    /// <summary>
+    ///     Defines the ProportionalWidth attached dependency property.
+    /// </summary>
+    public static readonly DependencyProperty ProportionalWidthProperty =
+        DependencyProperty.RegisterAttached("ProportionalWidth", typeof(double), typeof(ColumnWidthBehavior), new UIPropertyMetadata(double.NaN));
+
+    /// <summary>
+    ///     Defines the TemplatePaddingWidthFix attached dependency property.
+    /// </summary>
+    public static readonly DependencyProperty TemplatePaddingWidthFixProperty =
+        DependencyProperty.RegisterAttached("TemplatePaddingWidthFix", typeof(double), typeof(ColumnWidthBehavior), new UIPropertyMetadata(10.0));
+
+    private static readonly DependencyProperty OriginalWidthIsRememberedProperty =
+        DependencyProperty.RegisterAttached("OriginalWidthIsRemembered", typeof(bool), typeof(ColumnWidthBehavior), new UIPropertyMetadata(false));
+
+    private static readonly DependencyProperty OriginalWidthProperty =
+        DependencyProperty.RegisterAttached("OriginalWidth", typeof(double), typeof(ColumnWidthBehavior), new UIPropertyMetadata(0.0));
+
+    private static readonly DependencyProperty ColumnWidthBehaviorProperty =
+        DependencyProperty.RegisterAttached("ColumnWidthBehavior", typeof(ColumnWidthBehavior), typeof(ColumnWidthBehavior), new UIPropertyMetadata(null));
+
+    private bool _changedEventCatched;
+    private GridViewColumnCollection _columns;
+    private DependencyObject _owner;
+    private ScrollContentPresenter _scrollContentPresenter;
+    private List<GridViewColumn> _toResizeColumns;
+
+    private ColumnWidthBehavior()
     {
-        /// <summary>
-        ///     Defines the AutoSize attached dependency property.
-        /// </summary>
-        public static readonly DependencyProperty AutoSizeProperty =
-            DependencyProperty.RegisterAttached("AutoSize", typeof(ColumnResizeKind), typeof(ColumnWidthBehavior), new UIPropertyMetadata(OnAutoSizeChanged));
+    }
 
-        /// <summary>
-        ///     Defines the ProportionalWidth attached dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ProportionalWidthProperty =
-            DependencyProperty.RegisterAttached("ProportionalWidth", typeof(double), typeof(ColumnWidthBehavior), new UIPropertyMetadata(double.NaN));
+    /// <summary>
+    ///     Gets resize kind for a column.
+    /// </summary>
+    /// <param name="obj">The element from which the property value is read.</param>
+    /// <returns>The ColumnWidthBehavior.AutoSize property value for the element.</returns>
+    public static ColumnResizeKind GetAutoSize(DependencyObject obj)
+    {
+        return (ColumnResizeKind)obj.GetValue(AutoSizeProperty);
+    }
 
-        /// <summary>
-        ///     Defines the TemplatePaddingWidthFix attached dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TemplatePaddingWidthFixProperty =
-            DependencyProperty.RegisterAttached("TemplatePaddingWidthFix", typeof(double), typeof(ColumnWidthBehavior), new UIPropertyMetadata(10.0));
+    /// <summary>
+    ///     Attaches the resize kind for a column.
+    /// </summary>
+    /// <param name="obj">The element to which the attached property is written.</param>
+    /// <param name="value">The needed ColumnWidthBehavior.AutoSize value.</param>
+    public static void SetAutoSize(DependencyObject obj, ColumnResizeKind value)
+    {
+        obj.SetValue(AutoSizeProperty, value);
+    }
 
-        private static readonly DependencyProperty OriginalWidthIsRememberedProperty =
-            DependencyProperty.RegisterAttached("OriginalWidthIsRemembered", typeof(bool), typeof(ColumnWidthBehavior), new UIPropertyMetadata(false));
+    private static void OnAutoSizeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (!(sender is ListView element))
+            throw new InvalidOperationException("The ColumnWidthBehavior can be attached to a ListView only.");
 
-        private static readonly DependencyProperty OriginalWidthProperty =
-            DependencyProperty.RegisterAttached("OriginalWidth", typeof(double), typeof(ColumnWidthBehavior), new UIPropertyMetadata(0.0));
+        var behavior = GetOrSetBehavior(sender);
+        behavior._owner = sender;
 
-        private static readonly DependencyProperty ColumnWidthBehaviorProperty =
-            DependencyProperty.RegisterAttached("ColumnWidthBehavior", typeof(ColumnWidthBehavior), typeof(ColumnWidthBehavior), new UIPropertyMetadata(null));
+        if (e.OldValue != null)
+            element.Loaded -= behavior.Element_Loaded;
+        if (e.NewValue != null)
+            element.Loaded += behavior.Element_Loaded;
+    }
 
-        private bool _changedEventCatched;
-        private GridViewColumnCollection _columns;
-        private DependencyObject _owner;
-        private ScrollContentPresenter _scrollContentPresenter;
-        private List<GridViewColumn> _toResizeColumns;
+    /// <summary>
+    ///     Gets proportional size in percent for a column.
+    /// </summary>
+    /// <param name="obj">The element from which the property value is read.</param>
+    /// <returns>The ColumnWidthBehavior.ProportionalWidth property value for the element.</returns>
+    public static double GetProportionalWidth(DependencyObject obj)
+    {
+        return (double)obj.GetValue(ProportionalWidthProperty);
+    }
 
-        private ColumnWidthBehavior()
+    /// <summary>
+    ///     Attaches the proportional size in percent for a column.
+    /// </summary>
+    /// <param name="obj">The element to which the attached property is written.</param>
+    /// <param name="value">The needed ColumnWidthBehavior.ProportionalWidth value.</param>
+    public static void SetProportionalWidth(DependencyObject obj, double value)
+    {
+        obj.SetValue(ProportionalWidthProperty, value);
+    }
+
+    /// <summary>
+    ///     Gets additional space left from a column by calculating the width.
+    /// </summary>
+    /// <param name="obj">The element from which the property value is read.</param>
+    /// <returns>The ColumnWidthBehavior.TemplatePaddingWidthFix property value for the element.</returns>
+    public static double GetTemplatePaddingWidthFix(DependencyObject obj)
+    {
+        return (double)obj.GetValue(TemplatePaddingWidthFixProperty);
+    }
+
+    /// <summary>
+    ///     Attaches the additional space left from a column by calculating the width.
+    /// </summary>
+    /// <param name="obj">The element to which the attached property is written.</param>
+    /// <param name="value">The needed ColumnWidthBehavior.TemplatePaddingWidthFix value.</param>
+    public static void SetTemplatePaddingWidthFix(DependencyObject obj, double value)
+    {
+        obj.SetValue(TemplatePaddingWidthFixProperty, value);
+    }
+
+    private static bool GetOriginalWidthIsRemembered(DependencyObject obj)
+    {
+        return (bool)obj.GetValue(OriginalWidthIsRememberedProperty);
+    }
+
+    private static void SetOriginalWidthIsRemembered(DependencyObject obj, bool value)
+    {
+        obj.SetValue(OriginalWidthIsRememberedProperty, value);
+    }
+
+    private static double GetOriginalWidth(DependencyObject obj)
+    {
+        return (double)obj.GetValue(OriginalWidthProperty);
+    }
+
+    private static void SetOriginalWidth(DependencyObject obj, double value)
+    {
+        obj.SetValue(OriginalWidthProperty, value);
+    }
+
+    private static ColumnWidthBehavior GetColumnWidthBehavior(DependencyObject obj)
+    {
+        return (ColumnWidthBehavior)obj.GetValue(ColumnWidthBehaviorProperty);
+    }
+
+    private static void SetColumnWidthBehavior(DependencyObject obj, ColumnWidthBehavior value)
+    {
+        obj.SetValue(ColumnWidthBehaviorProperty, value);
+    }
+
+    private static ColumnWidthBehavior GetOrSetBehavior(DependencyObject sender)
+    {
+        var behavior = GetColumnWidthBehavior(sender);
+        if (behavior == null)
         {
+            behavior = new ColumnWidthBehavior();
+            SetColumnWidthBehavior(sender, behavior);
         }
 
-        /// <summary>
-        ///     Gets resize kind for a column.
-        /// </summary>
-        /// <param name="obj">The element from which the property value is read.</param>
-        /// <returns>The ColumnWidthBehavior.AutoSize property value for the element.</returns>
-        public static ColumnResizeKind GetAutoSize(DependencyObject obj)
+        return behavior;
+    }
+
+    private void Element_Loaded(object sender, RoutedEventArgs e)
+    {
+        Resize();
+    }
+
+    private void ScrollContentPresenter_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        Resize();
+    }
+
+    private void Resize()
+    {
+        var kind = GetAutoSize(_owner);
+        if (kind == ColumnResizeKind.NoResize)
+            return;
+
+        if (_columns == null)
+            TryReadColumns();
+
+        if (_scrollContentPresenter == null)
         {
-            return (ColumnResizeKind)obj.GetValue(AutoSizeProperty);
+            _scrollContentPresenter = FindPresenter();
+            if (_scrollContentPresenter != null)
+                _scrollContentPresenter.SizeChanged += ScrollContentPresenter_SizeChanged;
         }
 
-        /// <summary>
-        ///     Attaches the resize kind for a column.
-        /// </summary>
-        /// <param name="obj">The element to which the attached property is written.</param>
-        /// <param name="value">The needed ColumnWidthBehavior.AutoSize value.</param>
-        public static void SetAutoSize(DependencyObject obj, ColumnResizeKind value)
+        if (_columns == null || _scrollContentPresenter == null)
+            return;
+
+        switch (kind)
         {
-            obj.SetValue(AutoSizeProperty, value);
+            case ColumnResizeKind.ByContent:
+                ResizeByContent();
+                break;
+            case ColumnResizeKind.ByControl:
+                ResizeByControl();
+                break;
+            case ColumnResizeKind.Proportional:
+                ResizeProportional();
+                break;
+        }
+    }
+
+    private void TryReadColumns()
+    {
+        var presenter = VisualTreeAssist.FindChild<GridViewHeaderRowPresenter>(_owner);
+        if (presenter != null)
+            _columns = presenter.Columns;
+
+        if (_columns == null)
+            return;
+
+        SetOriginalWidths();
+        _columns.CollectionChanged += (a, b) => Reset();
+    }
+
+    private void Reset()
+    {
+        if (_toResizeColumns != null)
+        {
+            foreach (var column in _toResizeColumns.Where(GetOriginalWidthIsRemembered))
+                column.Width = GetOriginalWidth(column);
+            _toResizeColumns.Clear();
+            _toResizeColumns = null;
         }
 
-        private static void OnAutoSizeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        Resize();
+    }
+
+    private void SetOriginalWidths()
+    {
+        foreach (var column in _columns)
         {
-            if (!(sender is ListView element))
-                throw new InvalidOperationException("The ColumnWidthBehavior can be attached to a ListView only.");
+            SetOriginalWidth(column, column.Width);
+            SetOriginalWidthIsRemembered(column, true);
+        }
+    }
 
-            var behavior = GetOrSetBehavior(sender);
-            behavior._owner = sender;
+    private ScrollContentPresenter FindPresenter()
+    {
+        var internalScrollViewer = VisualTreeAssist.FindChild<ScrollViewer>(_owner);
+        return VisualTreeAssist.FindChild<ScrollContentPresenter>(internalScrollViewer);
+    }
 
-            if (e.OldValue != null)
-                element.Loaded -= behavior.Element_Loaded;
-            if (e.NewValue != null)
-                element.Loaded += behavior.Element_Loaded;
+    private void ResizeByContent()
+    {
+        if (!_changedEventCatched)
+        {
+            _changedEventCatched = true;
+
+            var itemsControl = (ItemsControl)_owner;
+            var coll = CollectionViewSource.GetDefaultView(itemsControl.Items);
+            coll.CollectionChanged += (a, b) => { ResizeByContent(); };
         }
 
-        /// <summary>
-        ///     Gets proportional size in percent for a column.
-        /// </summary>
-        /// <param name="obj">The element from which the property value is read.</param>
-        /// <returns>The ColumnWidthBehavior.ProportionalWidth property value for the element.</returns>
-        public static double GetProportionalWidth(DependencyObject obj)
+        foreach (var column in _columns)
         {
-            return (double)obj.GetValue(ProportionalWidthProperty);
-        }
+            if (!double.IsNaN(column.Width))
+                continue;
 
-        /// <summary>
-        ///     Attaches the proportional size in percent for a column.
-        /// </summary>
-        /// <param name="obj">The element to which the attached property is written.</param>
-        /// <param name="value">The needed ColumnWidthBehavior.ProportionalWidth value.</param>
-        public static void SetProportionalWidth(DependencyObject obj, double value)
-        {
-            obj.SetValue(ProportionalWidthProperty, value);
+            column.Width = 0;
+            column.Width = double.NaN;
         }
+    }
 
-        /// <summary>
-        ///     Gets additional space left from a column by calculating the width.
-        /// </summary>
-        /// <param name="obj">The element from which the property value is read.</param>
-        /// <returns>The ColumnWidthBehavior.TemplatePaddingWidthFix property value for the element.</returns>
-        public static double GetTemplatePaddingWidthFix(DependencyObject obj)
-        {
-            return (double)obj.GetValue(TemplatePaddingWidthFixProperty);
-        }
+    private void ResizeByControl()
+    {
+        var maxWidth = _scrollContentPresenter.ActualWidth;
+        maxWidth -= GetTemplatePaddingWidthFix(_owner);
 
-        /// <summary>
-        ///     Attaches the additional space left from a column by calculating the width.
-        /// </summary>
-        /// <param name="obj">The element to which the attached property is written.</param>
-        /// <param name="value">The needed ColumnWidthBehavior.TemplatePaddingWidthFix value.</param>
-        public static void SetTemplatePaddingWidthFix(DependencyObject obj, double value)
+        if (maxWidth > 0)
         {
-            obj.SetValue(TemplatePaddingWidthFixProperty, value);
-        }
-
-        private static bool GetOriginalWidthIsRemembered(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(OriginalWidthIsRememberedProperty);
-        }
-
-        private static void SetOriginalWidthIsRemembered(DependencyObject obj, bool value)
-        {
-            obj.SetValue(OriginalWidthIsRememberedProperty, value);
-        }
-
-        private static double GetOriginalWidth(DependencyObject obj)
-        {
-            return (double)obj.GetValue(OriginalWidthProperty);
-        }
-
-        private static void SetOriginalWidth(DependencyObject obj, double value)
-        {
-            obj.SetValue(OriginalWidthProperty, value);
-        }
-
-        private static ColumnWidthBehavior GetColumnWidthBehavior(DependencyObject obj)
-        {
-            return (ColumnWidthBehavior)obj.GetValue(ColumnWidthBehaviorProperty);
-        }
-
-        private static void SetColumnWidthBehavior(DependencyObject obj, ColumnWidthBehavior value)
-        {
-            obj.SetValue(ColumnWidthBehaviorProperty, value);
-        }
-
-        private static ColumnWidthBehavior GetOrSetBehavior(DependencyObject sender)
-        {
-            var behavior = GetColumnWidthBehavior(sender);
-            if (behavior == null)
+            var leftDistance = CalculateFixedDistance();
+            foreach (var column in _toResizeColumns)
             {
-                behavior = new ColumnWidthBehavior();
-                SetColumnWidthBehavior(sender, behavior);
-            }
-
-            return behavior;
-        }
-
-        private void Element_Loaded(object sender, RoutedEventArgs e)
-        {
-            Resize();
-        }
-
-        private void ScrollContentPresenter_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            Resize();
-        }
-
-        private void Resize()
-        {
-            var kind = GetAutoSize(_owner);
-            if (kind == ColumnResizeKind.NoResize)
-                return;
-
-            if (_columns == null)
-                TryReadColumns();
-
-            if (_scrollContentPresenter == null)
-            {
-                _scrollContentPresenter = FindPresenter();
-                if (_scrollContentPresenter != null)
-                    _scrollContentPresenter.SizeChanged += ScrollContentPresenter_SizeChanged;
-            }
-
-            if (_columns == null || _scrollContentPresenter == null)
-                return;
-
-            switch (kind)
-            {
-                case ColumnResizeKind.ByContent:
-                    ResizeByContent();
-                    break;
-                case ColumnResizeKind.ByControl:
-                    ResizeByControl();
-                    break;
-                case ColumnResizeKind.Proportional:
-                    ResizeProportional();
-                    break;
-            }
-        }
-
-        private void TryReadColumns()
-        {
-            var presenter = VisualTreeAssist.FindChild<GridViewHeaderRowPresenter>(_owner);
-            if (presenter != null)
-                _columns = presenter.Columns;
-
-            if (_columns == null)
-                return;
-
-            SetOriginalWidths();
-            _columns.CollectionChanged += (a, b) => Reset();
-        }
-
-        private void Reset()
-        {
-            if (_toResizeColumns != null)
-            {
-                foreach (var column in _toResizeColumns.Where(GetOriginalWidthIsRemembered))
-                    column.Width = GetOriginalWidth(column);
-                _toResizeColumns.Clear();
-                _toResizeColumns = null;
-            }
-
-            Resize();
-        }
-
-        private void SetOriginalWidths()
-        {
-            foreach (var column in _columns)
-            {
-                SetOriginalWidth(column, column.Width);
-                SetOriginalWidthIsRemembered(column, true);
-            }
-        }
-
-        private ScrollContentPresenter FindPresenter()
-        {
-            var internalScrollViewer = VisualTreeAssist.FindChild<ScrollViewer>(_owner);
-            return VisualTreeAssist.FindChild<ScrollContentPresenter>(internalScrollViewer);
-        }
-
-        private void ResizeByContent()
-        {
-            if (!_changedEventCatched)
-            {
-                _changedEventCatched = true;
-
-                var itemsControl = (ItemsControl)_owner;
-                var coll = CollectionViewSource.GetDefaultView(itemsControl.Items);
-                coll.CollectionChanged += (a, b) => { ResizeByContent(); };
-            }
-
-            foreach (var column in _columns)
-            {
-                if (!double.IsNaN(column.Width))
-                    continue;
-
-                column.Width = 0;
-                column.Width = double.NaN;
+                var newWidth = (maxWidth - leftDistance) / _toResizeColumns.Count;
+                if (newWidth >= 0)
+                    column.Width = newWidth;
             }
         }
+    }
 
-        private void ResizeByControl()
-        {
-            var maxWidth = _scrollContentPresenter.ActualWidth;
-            maxWidth -= GetTemplatePaddingWidthFix(_owner);
+    private void ResizeProportional()
+    {
+        var maxWidth = _scrollContentPresenter.ActualWidth;
+        maxWidth -= GetTemplatePaddingWidthFix(_owner);
 
-            if (maxWidth > 0)
+        if (maxWidth > 0)
+            foreach (var column in _toResizeColumns)
             {
-                var leftDistance = CalculateFixedDistance();
-                foreach (var column in _toResizeColumns)
+                var proportion = GetProportionalWidth(column);
+                if (!double.IsNaN(proportion))
                 {
-                    var newWidth = (maxWidth - leftDistance) / _toResizeColumns.Count;
+                    var newWidth = maxWidth / 100.0 * proportion;
                     if (newWidth >= 0)
                         column.Width = newWidth;
                 }
             }
-        }
+    }
 
-        private void ResizeProportional()
+    private double CalculateFixedDistance()
+    {
+        var leftDistance = 0d;
+        if (_toResizeColumns == null)
         {
-            var maxWidth = _scrollContentPresenter.ActualWidth;
-            maxWidth -= GetTemplatePaddingWidthFix(_owner);
-
-            if (maxWidth > 0)
-                foreach (var column in _toResizeColumns)
-                {
-                    var proportion = GetProportionalWidth(column);
-                    if (!double.IsNaN(proportion))
-                    {
-                        var newWidth = maxWidth / 100.0 * proportion;
-                        if (newWidth >= 0)
-                            column.Width = newWidth;
-                    }
-                }
+            _toResizeColumns = new List<GridViewColumn>();
+            foreach (var column in _columns)
+                if (column.Width >= 0)
+                    leftDistance += column.ActualWidth;
+                else
+                    _toResizeColumns.Add(column);
         }
-
-        private double CalculateFixedDistance()
+        else
         {
-            var leftDistance = 0d;
-            if (_toResizeColumns == null)
-            {
-                _toResizeColumns = new List<GridViewColumn>();
-                foreach (var column in _columns)
-                    if (column.Width >= 0)
-                        leftDistance += column.ActualWidth;
-                    else
-                        _toResizeColumns.Add(column);
-            }
-            else
-            {
-                leftDistance = _columns.Where(column => !_toResizeColumns.Contains(column)).Sum(column => column.ActualWidth);
-            }
-
-            return leftDistance;
+            leftDistance = _columns.Where(column => !_toResizeColumns.Contains(column)).Sum(column => column.ActualWidth);
         }
+
+        return leftDistance;
     }
 }
