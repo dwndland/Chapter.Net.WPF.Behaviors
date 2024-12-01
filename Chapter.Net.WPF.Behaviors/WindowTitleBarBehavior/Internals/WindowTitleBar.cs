@@ -8,7 +8,6 @@ using System;
 using System.Windows;
 using System.Windows.Interop;
 using Chapter.Net.WinAPI;
-using Chapter.Net.WinAPI.Data;
 
 // ReSharper disable once CheckNamespace
 
