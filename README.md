@@ -3,7 +3,7 @@
 # Chapter.Net.WPF.Behaviors Library
 
 ## Overview
-Brings additional behaviors to existing WPF controls.
+Chapter.Net.WPF.Behaviors is a library that provides a wide range of attached behaviors for WPF controls to enhance UI functionality without code-behind.
 
 ## Features
 - **ColumnSortBehavior:** Enables sorting by click on the header on a ListView.

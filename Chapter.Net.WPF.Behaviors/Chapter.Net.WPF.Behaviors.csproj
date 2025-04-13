@@ -5,8 +5,8 @@
     <UseWPF>true</UseWPF>
     <Version>2.1.0</Version>
     <Authors>David Wendland</Authors>
-    <Description>Brings additional behaviors to existing WPF controls.</Description>
-    <Copyright>Copyright (c) 2024 David Wendland</Copyright>
+    <Description>Chapter.Net.WPF.Behaviors is a library that provides a wide range of attached behaviors for WPF controls to enhance UI functionality without code-behind.</Description>
+    <Copyright>Copyright (c) 2025 David Wendland</Copyright>
     <PackageProjectUrl>https://github.com/dwndland/Chapter.Net.WPF.Behaviors</PackageProjectUrl>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
